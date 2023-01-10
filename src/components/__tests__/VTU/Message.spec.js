@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils'
-import Message,{ validateVariant } from '../Message.vue'
+import Message,{ validateVariant } from '../../Message.vue'
 
 describe('Message', () => {
   it('renders variant correctly when passed', () => {

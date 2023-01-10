@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/vue'
-import Navbar from '../Navbar.vue'
+import Navbar from '../../Navbar.vue'
 
 describe('Navbar1', () => {
   it('shows logout when authenticated is true', () => {

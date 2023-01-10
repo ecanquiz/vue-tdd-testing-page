@@ -1,6 +1,7 @@
 <template>
-  <button v-if="authenticated">Logout</button>
-  <button v-if="!authenticated">Login</button>
+  <a>
+    {{ `${authenticated ? 'Logout' : 'Login'}` }}
+  </a>
 </template>
 
 <script>
