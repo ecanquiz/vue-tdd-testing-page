@@ -1,5 +1,5 @@
 import { render } from '@testing-library/vue'
-import Message,{ validateVariant } from '../Message.vue'
+import Message,{ validateVariant } from '../../Message.vue'
 
 describe('Message', () => {
   it('renders variant correctly when passed', () => {
