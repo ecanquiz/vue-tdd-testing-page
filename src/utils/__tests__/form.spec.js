@@ -1,7 +1,9 @@
 import {
   isBetween,
+  isFormValid,
+  patientForm,
   required,
-  validateMeasurement
+  validateMeasurement  
 } from '../form.js'
 
 describe('required', () => {
@@ -72,6 +74,74 @@ describe('validateMeasurement', () => {
     expect(actual).toEqual({
       valid: false,
       message: 'Must be between 10 and 30'
+    })
+  })
+})
+
+describe('isFormValid', () => {
+  it('returns true when name and weight field are valid', () => {
+    const form = {
+      name: { valid: true },
+      weight: { valid: true }
+    }
+
+    expect(isFormValid(form)).toBe(true)
+  })
+
+  it('returns false when any field is invalid', () => {
+    const form = {
+      name: { valid: false },
+      weight: { valid: true }
+    }
+
+    expect(isFormValid(form)).toBe(false)
+  })
+})
+
+describe('patientForm', () => {
+  const validPatient = {
+    name: 'test patient',
+    weight: { value: 100, units: 'kg' }
+  }
+
+  it('is valid when form is filled out correctly', () => {
+    const form = patientForm(validPatient)
+    expect(form.name).toEqual({ valid: true })
+    expect(form.weight).toEqual({ valid: true })
+  })
+
+  it('is invalid when name is null', () => {
+    const form = patientForm({ ...validPatient, name: '' })
+    expect(form.name).toEqual({ valid: false, message: 'Required' })
+  })
+
+  it('validates weight in imperial', () => {
+    const form = patientForm({
+      ...validPatient,
+      weight: {
+        value: 65,
+        units: 'lb'
+      }
+    })
+
+    expect(form.weight).toEqual({
+      valid: false,
+      message: 'Must be between 66 and 440'
+    })
+  })
+
+  it('validates weight in metric', () => {
+    const form = patientForm({
+      ...validPatient,
+      weight: {
+        value: 29,
+        units: 'kg'
+      }
+    })
+
+    expect(form.weight).toEqual({
+      valid: false,
+      message: 'Must be between 30 and 200'
     })
   })
 })
